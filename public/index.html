@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RSA personalizado</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Keania+One&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* Aplica la fuente personalizada a los encabezados */
+        h1 {
+            font-family: 'Keania One', sans-serif;
+            position: absolute;
+            left:36%;
+            font-size: clamp(1.5rem, 4vw, 6.125rem);
+        }
+        #mensaje{
+            font-family: 'Keania One', sans-serif;
+        }
+        @media (max-width:1024px) {
+         h1{
+         left: 32%;
+         }
+        }
+        @media (max-width:881px){
+            h1{
+                left: 33%;
+            }
+        }
+        @media (max-width:768px){
+            h1{
+                top: -5%;
+            }
+        }
+        @media (max-width: 425px){
+            h1{
+                top: unset;
+            }
+        }
+
+        @media (min-width: 1440px){
+            h1{
+                top: -1%;
+                left: 34%;
+            }
+        }
+        @media (min-width: 2560px){
+            h1{
+                top: 1%;
+                left: 36%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>RSA personalizado</h1>
+    <div class="rsa-text">
+    <p>Bienvenido a nuestra plataforma web sobre el algoritmo RSA<button id="mensaje" onclick="window.RSA_message.showModal();"><span>¡</span></button>,  uno de los métodos más importantes en la criptografía moderna. En esta plataforma web, te llevaremos paso a paso a través del funcionamiento de RSA y la generación de las claves necesarias para su implementación.</p>
+    <p>Nuestra plataforma está organizada en tres secciones clave:</p>
+    <ol>
+        <li><strong>Generación de Claves:</strong>Aprende cómo se crean las  claves pública<button id="mensaje" onclick="window.clave_publica.showModal();"><span>¡</span></button> y privada<button id="mensaje" onclick="window.clave_privada.showModal();"><span>¡</span></button>, esenciales para el proceso de cifrado y descifrado.</li>
+        <li><button id="mensaje" onclick="modalCifrado();"><span>¡</span></button> <strong>Cifrado:</strong>Descubre cómo utilizar la clave pública para cifrar mensajes y garantizar que solo los destinatarios autorizados puedan leerlos.</li>
+        <li><button id="mensaje" onclick="modalDescifrado();"><span>¡</span></button> <strong>Descifrado:</strong>Entiende el proceso de descifrado utilizando la clave privada para recuperar el mensaje original a partir del texto cifrado.</li>
+    </ol>
+    <button><a href="login/login.html">Inicio</a></button>
+    </div>
+    <footer>
+        <div class="footer-container">
+            <div class="autores">
+                <h3>Autores:</h3>
+                <ul>
+                    <li>Kevin Alexander Moreno Marín</li>
+                    <li>Daniel Pizarro Robles</li>
+                    <li>Juan José del Rio Molano</li>
+                </ul>
+            </div>
+
+            <div class="fuentes">
+                <h3>Fuentes de Información:</h3>
+                <ul>
+                    <li>"Handbook of Applied Crytography" - Autores: Alfred J. Menezes, Paul C. van Oorschot, Scott A. Vanstone</li>
+                    <li>"A method for obtaining digital signatures and public-key cryptosystems" - Autores: R. L. Rivest, A. Shamir, L. Adleman</li>
+                    <li><a href="https://www.youtube.com/watch?v=iEECaw2gYpk">"RSA: Curso Completo Teórico & Laboratorios (Parte del Curso de Criptografía)" - Autor: Sang Guun Yoo</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="creditos">
+            <p>© 2025 - Herramienta web interactiva para la comprensión del algoritmo de encriptación RSA </p>
+        </div>
+    </footer>
+    <dialog id="modal_cifrado">
+            <h2>¿Qué es Cifrado en RSA?</h2>
+            <p>El cifrado en RSA consiste en convertir un mensaje legible (el mensaje original) en un formato codificado utilizando una clave pública.</p>
+
+            <p>Fórmula:</p>
+            <p class="formula">C = M**e (MOD n)</p>
+                        
+            <p>C: Mensaje cifrado.</p>
+            <p>M: Mensaje original.</p>
+            <p>e: Exponente público (parte de la clave pública).</p>
+            <p>n: Módulo (parte de la clave pública).</p>
+                        
+            <p>Proceso: Para cifrar el mensaje “M”, se eleva “M” a la potencia “e” y luego se calcula el residuo de esta operación al dividir entre “n” (es decir, se realiza una operación módulo n).</p>
+            <button class="modal_button" onclick="window.modal_cifrado.close();">Cerrar</button>
+    </dialog>   
+    <dialog id="modal_descifrado">
+            <h2>¿Qué es Descifrado en RSA?</h2>
+            <p>El descifrado en RSA consiste en convertir un mensaje cifrado de vuelta a su forma original usando una clave privada.</p>
+
+            <p>Fórmula:</p>
+
+            <p class="formula">M = C**d (MOD n)</p>
+                        
+            <p>M: Mensaje original recuperado.</p>
+            <p>C: Mensaje cifrado.</p>
+            <p>d: Exponente privado (parte de la clave privada).</p>
+            <p>n: Módulo (parte de la clave pública y privada).</p>
+                        
+            <p>Proceso: Para descifrar el mensaje “C”, se eleva “C” a la potencia “d”  y luego se calcula el residuo de esta operación al dividir entre “n” (es decir, se realiza una operación módulo n).</p>
+            <button class="modal_button" onclick="window.modal_descifrado.close();">Cerrar</button>
+    </dialog>
+    <dialog id="clave_publica">
+        <p>Clave Pública en RSA</p>
+        <p>La clave pública se utiliza para cifrar los mensajes, los cuales solo pueden ser descifrados por la clave privada correspondiente. Esta clave está compuesta por dos elementos: un exponente público (e) y un módulo (n).  La clave pública puede compartirse libremente con cualquier persona, ya que no compromete la seguridad del sistema.</p>
+        <button class="modal_button" onclick="window.clave_publica.close();">Cerrar</button>
+    </dialog>
+    <dialog id="clave_privada">
+        <p>Clave Privada en RSA</p>
+        <p>La clave privada se utiliza para descifrar los mensajes que han sido cifrados con la clave pública correspondiente. Esta clave está compuesta por un exponente privado (d) y el mismo módulo (n) que se usa en la clave pública. A diferencia de la clave pública, la clave privada debe mantenerse en secreto y no debe compartirse bajo ninguna circunstancia, ya que es esencial para garantizar la seguridad del sistema.</p>
+        <button class="modal_button" onclick="window.clave_privada.close();">Cerrar</button>
+    </dialog>
+    <dialog id="RSA_message">
+        <p>RSA es un sistema de cifrado asimétrico que utiliza dos claves distintas: una clave pública para cifrar los mensajes y una clave privada para descifrarlos, a diferencia del cifrado simétrico, que emplea la misma clave para ambos procesos. Su seguridad se fundamenta en la dificultad de factorizar números grandes compuestos por el producto de dos números primos.</p>
+        <button class="modal_button" onclick="window.RSA_message.close();">Cerrar</button>
+    </dialog>
+    <script>
+    function modalCifrado() {
+        window.modal_cifrado.showModal();
+        window.modal_cifrado.scrollTop = 0; // Forzar que el contenido comience desde el inicio
+    }
+
+    function modalDescifrado() {
+        window.modal_descifrado.showModal();
+        window.modal_descifrado.scrollTop = 0; // Forzar que el contenido comience desde el inicio
+    }
+    </script>
+</body>
+</html>
